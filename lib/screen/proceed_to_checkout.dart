@@ -40,6 +40,7 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
         onVerticalDragEnd: (DragEndDetails details) =>
             FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
+          backgroundColor: Colors.white,
           drawer: const MyDrawer(),
           appBar: MyAppBar.myApp(context),
           body: Column(
@@ -61,7 +62,7 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
                 child: Stepper(
                   elevation: 0.0,
                   margin: const EdgeInsets.all(0.0),
-                  physics: const ScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   type: StepperType.horizontal,
                   currentStep: _index,
                   steps: <Step>[

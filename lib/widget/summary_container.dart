@@ -16,6 +16,7 @@ class _MyWidgetState extends State<OrderSummary> {
     return SizedBox(
       width: sWidth,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
             height: 10,
@@ -65,9 +66,15 @@ class _MyWidgetState extends State<OrderSummary> {
               contentPadding: const EdgeInsets.all(0.0),
               leading: const Icon(
                 Icons.stacked_bar_chart_outlined,
+                size: 30,
               ),
-              title: const Text(
+              title: Text(
                 "Add a Personalized Message",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               trailing: TextButton(
                 onPressed: () {},
@@ -75,7 +82,373 @@ class _MyWidgetState extends State<OrderSummary> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: sWidth,
+            height: 50,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Order Summary",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Colors.black,
+                        //  fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: 'Total:',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: Colors.black,
+                            // fontSize: 20,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: ' 15000',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.black,
+                                    // fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            color: Colors.white,
+            width: sWidth,
+            //height: 120,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) {
+                return summaryproduct(sWidth, context);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  height: 10.0,
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            contentPadding: const EdgeInsets.all(0.0),
+            leading: const Icon(Icons.gif_box_outlined),
+            title: RichText(
+              text: TextSpan(
+                  text: 'Have a coupon code?',
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Colors.black,
+                        // fontSize: 20,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: ' Apply here',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: Colors.blue,
+                            // fontSize: 20,
+                          ),
+                    ),
+                  ]),
+            ),
+          ),
+          ListTile(
+            contentPadding: const EdgeInsets.all(0.0),
+            leading: const Icon(Icons.percent_outlined),
+            title: RichText(
+              text: TextSpan(
+                  text: 'Have a coupon code?',
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Colors.black,
+                        // fontSize: 20,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: ' Apply here',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: Colors.blue,
+                            // fontSize: 20,
+                          ),
+                    ),
+                  ]),
+            ),
+          ),
+          billingDetails(sWidth, context),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Message Card 🎁",
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20,
+                ),
+          ),
+          const Divider(
+            color: Colors.grey,
+          ),
+          SizedBox(
+            width: sWidth,
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return const Chip(label: Text("Birth Day"));
+              },
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Container billingDetails(double sWidth, BuildContext context) {
+    return Container(
+      color: Colors.white,
+      width: sWidth,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Billing Details",
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 16,
+                ),
+          ),
+          const Divider(
+            height: 10,
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text("Total items"),
+                Text("5"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text("Sub Total"),
+                Text("₹ 15000"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text("Discount"),
+                Text("₹ 1000"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text("Shipping Charges"),
+                Text("Free"),
+              ],
+            ),
+          ),
+          const Divider(
+            height: 10,
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Total Amount:",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                ),
+                Text(
+                  "₹ 14000",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container summaryproduct(double sWidth, BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.grey,
+        ),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      // color: Colors.white,
+      padding: const EdgeInsets.all(4.0),
+      width: sWidth,
+      //height: 140,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  "https://res.cloudinary.com/interflora/f_auto,q_auto,t_prodth/products/p-hues-of-sky-149690-m.jpg",
+                  height: 80,
+                  width: 80,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: SizedBox(
+                    height: 80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Hues of Sky",
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        Text(
+                          "Qty. 2",
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  "₹ 3490",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          text: 'Standard by ',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.grey,
+                                    // fontSize: 20,
+                                  ),
+                          children: [
+                            TextSpan(
+                              text: '07-aug-2023 ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    color: Colors.black,
+                                    // fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ]),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: 'between ',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.grey,
+                                    // fontSize: 20,
+                                  ),
+                          children: [
+                            TextSpan(
+                              text: '20:00 hrs - 21:00 hrs ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    color: Colors.black,
+                                    // fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ]),
+                    ),
+                  ],
+                ),
+                const Icon(Icons.info_outline),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
