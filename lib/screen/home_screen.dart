@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
+import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 import 'package:phul_ecom_partner/utility/app_bar.dart';
 import 'package:phul_ecom_partner/utility/app_drawer.dart';
@@ -28,16 +29,16 @@ class _HomePageState extends State<HomePage> {
   bool b = false;
   @override
   void initState() {
-    getData();
+    getData(context);
     super.initState();
   }
 
-  getData() async {
+  getData(BuildContext context) async {
     setState(() {
       e = true;
     });
     Future.wait([
-      getA(),
+      getA(context),
       getB(),
       getC(),
       getD(),
@@ -55,12 +56,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  getDataRetry() async {
+  getDataRetry(BuildContext context) async {
     setState(() {
       e = true;
     });
     Future.wait([
-      getA(),
+      getA(context),
       getB(),
       getC(),
       getD(),
@@ -78,7 +79,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> getA() async {
+  Future<void> getA(BuildContext context) async {
+    context.read<TopSellerBloc>().add(const TopSellerDataEvent());
     return Future.delayed(const Duration(seconds: 2), () {
       // return 1;
     });
@@ -152,7 +154,7 @@ class _HomePageState extends State<HomePage> {
               ),
               InkWell(
                 onTap: () {
-                  getDataRetry();
+                  getDataRetry(context);
                 },
                 child: const Icon(
                   Icons.restore_page,
@@ -308,47 +310,59 @@ class _HomePageState extends State<HomePage> {
                   //   ),
                   // ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: StaticData.topSellers.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.66,
-                      ),
-                      itemBuilder: (context, index) {
-                        return FlowerCard(
-                          voidCallback: () {
-                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            //     content: Text(StaticData.topSellers[index].title)));
-                            //context.pushNamed('top-seller');
-                            // context.goNamed(
-                            //   "top-seller",
-                            // );
-                            context.push(
-                              context.namedLocation("flower-detail",
-                                  pathParameters: <String, String>{
-                                    'name': StaticData.topSellers[index].title
-                                  },
-                                  queryParameters: <String, String>{
-                                    'heading':
-                                        StaticData.topSellers[index].title,
-                                    'ratings':
-                                        StaticData.topSellers[index].ratings,
-                                    'itemId': StaticData.topSellers[index].id
-                                        .toString(),
-                                    'image': StaticData.topSellers[index].image,
-                                    'price': StaticData.topSellers[index].price,
-                                  }),
-                            );
-                          },
-                          topSeller: StaticData.topSellers[index],
+                  BlocBuilder<TopSellerBloc, TopSellerState>(
+                    builder: (context, state) {
+                      if (state is TopSellerLoaded) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: StaticData.topSellers.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.66,
+                            ),
+                            itemBuilder: (context, index) {
+                              return FlowerCard(
+                                voidCallback: () {
+                                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  //     content: Text(StaticData.topSellers[index].title)));
+                                  //context.pushNamed('top-seller');
+                                  // context.goNamed(
+                                  //   "top-seller",
+                                  // );
+                                  context.push(
+                                    context.namedLocation("flower-detail",
+                                        pathParameters: <String, String>{
+                                          'name':
+                                              StaticData.topSellers[index].title
+                                        },
+                                        queryParameters: <String, String>{
+                                          'heading': StaticData
+                                              .topSellers[index].title,
+                                          'ratings': StaticData
+                                              .topSellers[index].ratings,
+                                          'itemId': StaticData
+                                              .topSellers[index].id
+                                              .toString(),
+                                          'image': StaticData
+                                              .topSellers[index].image,
+                                          'price': StaticData
+                                              .topSellers[index].price,
+                                        }),
+                                  );
+                                },
+                                topSeller: StaticData.topSellers[index],
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
                   ),
 
                   /// Curated Collection

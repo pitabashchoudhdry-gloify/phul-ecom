@@ -51,6 +51,7 @@ class InternetconnectionCubit extends Cubit<InternetconnectionState> {
   @override
   Future<void> close() {
     connectivityStreamSubscription.cancel();
+
     return super.close();
   }
 }
