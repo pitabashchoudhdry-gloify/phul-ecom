@@ -24,9 +24,153 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String a = '';
+  bool e = false;
+  bool b = false;
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    setState(() {
+      e = true;
+    });
+    Future.wait([
+      getA(),
+      getB(),
+      getC(),
+      getD(),
+      getE(),
+      getF(),
+    ]).then((List<dynamic> data) {
+      setState(() {
+        e = false;
+        b = true;
+      });
+    }).catchError((error) {
+      setState(() {
+        e = false;
+      });
+    });
+  }
+
+  getDataRetry() async {
+    setState(() {
+      e = true;
+    });
+    Future.wait([
+      getA(),
+      getB(),
+      getC(),
+      getD(),
+      getE(),
+      getF(),
+    ]).then((List<dynamic> data) {
+      setState(() {
+        e = false;
+        b = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        e = false;
+      });
+    });
+  }
+
+  Future<void> getA() async {
+    return Future.delayed(const Duration(seconds: 2), () {
+      // return 1;
+    });
+  }
+
+  Future<void> getB() async {
+    return Future.delayed(const Duration(seconds: 3), () {
+      // return "wel come";
+    });
+  }
+
+  Future<void> getC() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getD() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getE() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getF() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (e == true) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/interflora-logo-desktop.png",
+                width: 100,
+                height: 100,
+                fit: BoxFit.fill,
+              ),
+              const CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (b == true) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Retry",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+              InkWell(
+                onTap: () {
+                  getDataRetry();
+                },
+                child: const Icon(
+                  Icons.restore_page,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return dataLoaded(context);
+    }
+  }
+
+  BlocListener<InternetconnectionCubit, InternetconnectionState> dataLoaded(
+      BuildContext context) {
     return BlocListener<InternetconnectionCubit, InternetconnectionState>(
       listener: (context, state) {
         if (state is InternetDisconnected) {

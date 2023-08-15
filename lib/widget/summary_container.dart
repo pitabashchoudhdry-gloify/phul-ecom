@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 
 class OrderSummary extends StatefulWidget {
   const OrderSummary({super.key});
@@ -12,6 +13,7 @@ class _MyWidgetState extends State<OrderSummary> {
   Widget build(BuildContext context) {
     final sWidth = MediaQuery.of(context).size.width;
     // final sHeight = MediaQuery.of(context).size.height;
+    // ScrollController ctr = ScrollController();
 
     return SizedBox(
       width: sWidth,
@@ -76,10 +78,14 @@ class _MyWidgetState extends State<OrderSummary> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              trailing: TextButton(
-                onPressed: () {},
-                child: const Text("compose"),
-              ),
+              // trailing: TextButton(
+              //   onPressed: () {
+              //     ctr.animateTo(10 * 100,
+              //         duration: const Duration(milliseconds: 1000),
+              //         curve: Curves.bounceIn);
+              //   },
+              //   child: const Text("compose"),
+              // ),
             ),
           ),
           const SizedBox(
@@ -117,7 +123,7 @@ class _MyWidgetState extends State<OrderSummary> {
                           ),
                       children: [
                         TextSpan(
-                          text: ' 15000',
+                          text: '₹ 15000',
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
                                     color: Colors.black,
@@ -138,9 +144,10 @@ class _MyWidgetState extends State<OrderSummary> {
             width: sWidth,
             //height: 120,
             child: ListView.separated(
+              // controller: ctr,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
+              itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
                 return summaryproduct(sWidth, context);
               },
@@ -180,14 +187,14 @@ class _MyWidgetState extends State<OrderSummary> {
             leading: const Icon(Icons.percent_outlined),
             title: RichText(
               text: TextSpan(
-                  text: 'Have a coupon code?',
+                  text: 'Have a gift voucher?',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: Colors.black,
                         // fontSize: 20,
                       ),
                   children: [
                     TextSpan(
-                      text: ' Apply here',
+                      text: ' Redeem',
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.blue,
                             // fontSize: 20,
@@ -212,13 +219,23 @@ class _MyWidgetState extends State<OrderSummary> {
           SizedBox(
             width: sWidth,
             height: 50,
-            child: ListView.builder(
+            child: ListView.separated(
+              //controller: ctr,
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               // physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
+              itemCount: StaticData.gifts.length,
               itemBuilder: (context, index) {
-                return const Chip(label: Text("Birth Day"));
+                return Chip(
+                  label: Text(
+                    StaticData.gifts[index].gift,
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  width: 10,
+                );
               },
             ),
           ),
