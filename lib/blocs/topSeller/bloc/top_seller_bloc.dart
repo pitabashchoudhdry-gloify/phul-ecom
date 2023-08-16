@@ -10,6 +10,13 @@ class TopSellerBloc extends Bloc<TopSellerEvent, TopSellerState> {
   TopSellerBloc() : super(TopSellerInitial()) {
     on<TopSellerEvent>((event, emit) {});
     on<TopSellerDataEvent>(fetchTopSeller);
+    on<TopSellerDataEventHome>(fetchDataFromHomeBloc);
+  }
+
+  FutureOr<void> fetchDataFromHomeBloc(event, emit) {
+    emit(
+      TopSellerLoaded(topSeller: event.topSellerList),
+    );
   }
 
   FutureOr<void> fetchTopSeller(event, emit) async {

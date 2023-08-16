@@ -68,7 +68,9 @@ class MyAppBar {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            showPopupMenu(context);
+          },
           icon: const Icon(
             Icons.account_circle_outlined,
             color: Colors.white,
@@ -77,4 +79,156 @@ class MyAppBar {
       ],
     );
   }
+
+  static Future<String?> showPopupMenu(BuildContext context) {
+    return showMenu<String>(
+      context: context,
+      position: const RelativeRect.fromLTRB(25.0, 100.0, 0.0,
+          0.0), //position where you want to show the menu on screen
+      items: const [
+        PopupMenuItem<String>(
+          //   height: 40,
+          value: '1',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.person_outline_outlined),
+            title: Text('Profile'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '2',
+          child: ListTile(
+              horizontalTitleGap: 0,
+              minVerticalPadding: 0,
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.list_alt_outlined),
+              title: Text('Order History')),
+        ),
+        PopupMenuItem<String>(
+          //  height: 40,
+          value: '3',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.wallet_giftcard_outlined),
+            title: Text('Wallet'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '4',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.location_city_outlined),
+            title: Text('Address Book'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '4',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.place_outlined),
+            title: Text('Track Order'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          padding: EdgeInsets.zero,
+          height: 2,
+          value: '5',
+          child: Divider(
+            color: Colors.grey,
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '6',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.phone_in_talk_outlined),
+            title: Text('Contact Us'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '7',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.gpp_maybe_outlined),
+            title: Text('Privacy Policy'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '8',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.book_online_outlined),
+            title: Text('Terms And Condition'),
+          ),
+        ),
+        PopupMenuItem<String>(
+          padding: EdgeInsets.zero,
+          height: 2,
+          value: '9',
+          child: Divider(
+            color: Colors.grey,
+          ),
+        ),
+        PopupMenuItem<String>(
+          // height: 40,
+          value: '10',
+          child: ListTile(
+            horizontalTitleGap: 0,
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(Icons.logout_outlined),
+            title: Text('Log Out'),
+          ),
+        ),
+      ],
+      elevation: 8.0,
+    );
+  }
+
+  // showPopupMenu(BuildContext context) {
+  //   showMenu<String>(
+  //     context: context,
+  //     position: RelativeRect.fromLTRB(25.0, 25.0, 0.0,
+  //         0.0), //position where you want to show the menu on screen
+  //     items: [
+  //       PopupMenuItem<String>(child: const Text('menu option 1'), value: '1'),
+  //       PopupMenuItem<String>(child: const Text('menu option 2'), value: '2'),
+  //       PopupMenuItem<String>(child: const Text('menu option 3'), value: '3'),
+  //     ],
+  //     elevation: 8.0,
+  //   );
+  //   // .then<void>((String itemSelected) {
+
+  //   //   if (itemSelected == null) return;
+
+  //   //   if(itemSelected == "1"){
+  //   //     //code here
+  //   //   }else if(itemSelected == "2"){
+  //   //     //code here
+  //   //   }else{
+  //   //     //code here
+  //   //   }
+
+  //   // });
+  // }
 }
