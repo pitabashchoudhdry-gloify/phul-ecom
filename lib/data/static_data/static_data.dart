@@ -323,6 +323,14 @@ class StaticData {
         "Hand-tied Bouquets",
         "Festive Collection"
       ];
+
+  static List<MessageCard> get gifts => [
+        MessageCard(id: 1, gift: "General gifting"),
+        MessageCard(id: 2, gift: "Birthday"),
+        MessageCard(id: 3, gift: "Anniversary"),
+        MessageCard(id: 4, gift: "House warming"),
+        MessageCard(id: 5, gift: "Wedding"),
+      ];
 }
 
 class LogoCategory {
@@ -361,5 +369,14 @@ class Review {
     required this.msg,
     required this.name,
     required this.place,
+  });
+}
+
+class MessageCard {
+  int id;
+  String gift;
+  MessageCard({
+    required this.id,
+    required this.gift,
   });
 }

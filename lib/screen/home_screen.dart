@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
+import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 import 'package:phul_ecom_partner/utility/app_bar.dart';
 import 'package:phul_ecom_partner/utility/app_drawer.dart';
@@ -24,9 +25,154 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String a = '';
+  bool e = false;
+  bool b = false;
+  @override
+  void initState() {
+    getData(context);
+    super.initState();
+  }
+
+  getData(BuildContext context) async {
+    setState(() {
+      e = true;
+    });
+    Future.wait([
+      getA(context),
+      getB(),
+      getC(),
+      getD(),
+      getE(),
+      getF(),
+    ]).then((List<dynamic> data) {
+      setState(() {
+        e = false;
+        b = true;
+      });
+    }).catchError((error) {
+      setState(() {
+        e = false;
+      });
+    });
+  }
+
+  getDataRetry(BuildContext context) async {
+    setState(() {
+      e = true;
+    });
+    Future.wait([
+      getA(context),
+      getB(),
+      getC(),
+      getD(),
+      getE(),
+      getF(),
+    ]).then((List<dynamic> data) {
+      setState(() {
+        e = false;
+        b = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        e = false;
+      });
+    });
+  }
+
+  Future<void> getA(BuildContext context) async {
+    context.read<TopSellerBloc>().add(const TopSellerDataEvent());
+    return Future.delayed(const Duration(seconds: 2), () {
+      // return 1;
+    });
+  }
+
+  Future<void> getB() async {
+    return Future.delayed(const Duration(seconds: 3), () {
+      // return "wel come";
+    });
+  }
+
+  Future<void> getC() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getD() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getE() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
+
+  Future<void> getF() async {
+    return Future.delayed(const Duration(seconds: 8), () {
+      // return true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (e == true) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/interflora-logo-desktop.png",
+                width: 100,
+                height: 100,
+                fit: BoxFit.fill,
+              ),
+              const CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (b == true) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Retry",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+              InkWell(
+                onTap: () {
+                  getDataRetry(context);
+                },
+                child: const Icon(
+                  Icons.restore_page,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return dataLoaded(context);
+    }
+  }
+
+  BlocListener<InternetconnectionCubit, InternetconnectionState> dataLoaded(
+      BuildContext context) {
     return BlocListener<InternetconnectionCubit, InternetconnectionState>(
       listener: (context, state) {
         if (state is InternetDisconnected) {
@@ -164,47 +310,59 @@ class _HomePageState extends State<HomePage> {
                   //   ),
                   // ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: StaticData.topSellers.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.66,
-                      ),
-                      itemBuilder: (context, index) {
-                        return FlowerCard(
-                          voidCallback: () {
-                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            //     content: Text(StaticData.topSellers[index].title)));
-                            //context.pushNamed('top-seller');
-                            // context.goNamed(
-                            //   "top-seller",
-                            // );
-                            context.push(
-                              context.namedLocation("flower-detail",
-                                  pathParameters: <String, String>{
-                                    'name': StaticData.topSellers[index].title
-                                  },
-                                  queryParameters: <String, String>{
-                                    'heading':
-                                        StaticData.topSellers[index].title,
-                                    'ratings':
-                                        StaticData.topSellers[index].ratings,
-                                    'itemId': StaticData.topSellers[index].id
-                                        .toString(),
-                                    'image': StaticData.topSellers[index].image,
-                                    'price': StaticData.topSellers[index].price,
-                                  }),
-                            );
-                          },
-                          topSeller: StaticData.topSellers[index],
+                  BlocBuilder<TopSellerBloc, TopSellerState>(
+                    builder: (context, state) {
+                      if (state is TopSellerLoaded) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: StaticData.topSellers.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.66,
+                            ),
+                            itemBuilder: (context, index) {
+                              return FlowerCard(
+                                voidCallback: () {
+                                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  //     content: Text(StaticData.topSellers[index].title)));
+                                  //context.pushNamed('top-seller');
+                                  // context.goNamed(
+                                  //   "top-seller",
+                                  // );
+                                  context.push(
+                                    context.namedLocation("flower-detail",
+                                        pathParameters: <String, String>{
+                                          'name':
+                                              StaticData.topSellers[index].title
+                                        },
+                                        queryParameters: <String, String>{
+                                          'heading': StaticData
+                                              .topSellers[index].title,
+                                          'ratings': StaticData
+                                              .topSellers[index].ratings,
+                                          'itemId': StaticData
+                                              .topSellers[index].id
+                                              .toString(),
+                                          'image': StaticData
+                                              .topSellers[index].image,
+                                          'price': StaticData
+                                              .topSellers[index].price,
+                                        }),
+                                  );
+                                },
+                                topSeller: StaticData.topSellers[index],
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
                   ),
 
                   /// Curated Collection

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/utility/app_bar.dart';
 import 'package:phul_ecom_partner/utility/app_drawer.dart';
 import 'package:phul_ecom_partner/widget/address_container.dart';
+import 'package:phul_ecom_partner/widget/payment_section.dart';
 import 'package:phul_ecom_partner/widget/summary_container.dart';
 
 import '../blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
@@ -40,10 +41,13 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
         onVerticalDragEnd: (DragEndDetails details) =>
             FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
+          backgroundColor: Colors.white,
           drawer: const MyDrawer(),
           appBar: MyAppBar.myApp(context),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          body: ListView(
+            padding: EdgeInsets.zero,
+            // controller: _scroll,
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: Padding(
@@ -57,11 +61,14 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
                   ),
                 ),
               ),
-              Expanded(
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.8,
+                color: Colors.transparent,
                 child: Stepper(
                   elevation: 0.0,
                   margin: const EdgeInsets.all(0.0),
-                  physics: const ScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   type: StepperType.horizontal,
                   currentStep: _index,
                   steps: <Step>[
@@ -88,10 +95,7 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
                     Step(
                       title: const Text(''),
                       label: const Text('Payment'),
-                      content: Container(
-                          color: Colors.yellow,
-                          height: 200,
-                          child: const Text('Content for Step 3')),
+                      content: const PaymentOption(),
                       // isActive: _checkState(2) == StepState.complete ? false : true,
                       isActive: _index >= 2,
                       state: _checkState(2),
@@ -154,12 +158,13 @@ class _ProceedToCheckOutState extends State<ProceedToCheckOut> {
                           child: const Text("Check Summary"));
                     } else {
                       return ElevatedButton(
-                          onPressed: () {
-                            // setState(() {
-                            //   _index = _index + 1;
-                            // });
-                          },
-                          child: const Text("Make Payment"));
+                        onPressed: () {
+                          // setState(() {
+                          //   _index = _index + 1;
+                          // });
+                        },
+                        child: const Text("Make Payment"),
+                      );
                     }
                   },
                 ),

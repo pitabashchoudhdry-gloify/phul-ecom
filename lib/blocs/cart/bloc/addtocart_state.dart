@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'addtocart_bloc.dart';
 
-abstract class AddtocartState extends Equatable {
+class AddtocartState extends Equatable {
   const AddtocartState();
 
   @override

@@ -137,7 +137,7 @@ class _MyAddressSectionState extends State<MyAddressSection> {
             const FormTextField(
               validator: "Please enter Email Address",
               textType: TextInputType.emailAddress,
-              label: "Email ID",
+              label: "Email ID *",
               hintText: "Recipient Email Id",
             ),
 
