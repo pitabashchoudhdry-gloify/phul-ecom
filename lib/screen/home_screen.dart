@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phul_ecom_partner/blocs/homescreen/bloc/home_screen_bloc_bloc.dart';
 import 'package:phul_ecom_partner/blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
 import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
@@ -29,8 +30,13 @@ class _HomePageState extends State<HomePage> {
   bool b = false;
   @override
   void initState() {
-    getData(context);
+    // getData(context);
+    getMe();
     super.initState();
+  }
+
+  getMe() async {
+    context.read<HomeScreenBlocBloc>().add(const HomeScreenDataEvent());
   }
 
   getData(BuildContext context) async {
@@ -47,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     ]).then((List<dynamic> data) {
       setState(() {
         e = false;
-        b = true;
+        b = false;
       });
     }).catchError((error) {
       setState(() {
@@ -118,57 +124,84 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (e == true) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/interflora-logo-desktop.png",
-                width: 100,
-                height: 100,
-                fit: BoxFit.fill,
+    return BlocBuilder<HomeScreenBlocBloc, HomeScreenBlocState>(
+      builder: (context, state) {
+        if (state is HomeScreenLoading) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/interflora-logo-desktop.png",
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                  // const CircularProgressIndicator.adaptive(
+                  //   backgroundColor: Colors.white,
+                  // ),
+                ],
               ),
-              const CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      );
-    } else if (b == true) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Retry",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
-              InkWell(
-                onTap: () {
-                  getDataRetry(context);
-                },
-                child: const Icon(
-                  Icons.restore_page,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return dataLoaded(context);
-    }
+            ),
+          );
+        } else {
+          return dataLoaded(context);
+        }
+      },
+    );
+    // if (e == true) {
+    //   return Scaffold(
+    //     backgroundColor: Colors.black,
+    //     body: Center(
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           Image.asset(
+    //             "assets/interflora-logo-desktop.png",
+    //             width: 100,
+    //             height: 100,
+    //             fit: BoxFit.fill,
+    //           ),
+    //           const CircularProgressIndicator.adaptive(
+    //             backgroundColor: Colors.white,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // } else if (b == true) {
+    //   return Scaffold(
+    //     backgroundColor: Colors.black,
+    //     body: Center(
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: [
+    //           Text(
+    //             "Retry",
+    //             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+    //                   color: Colors.white,
+    //                 ),
+    //           ),
+    //           InkWell(
+    //             onTap: () {
+    //               getDataRetry(context);
+    //             },
+    //             child: const Icon(
+    //               Icons.restore_page,
+    //               size: 50,
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // } else {
+    //   return dataLoaded(context);
+    // }
   }
 
   BlocListener<InternetconnectionCubit, InternetconnectionState> dataLoaded(
