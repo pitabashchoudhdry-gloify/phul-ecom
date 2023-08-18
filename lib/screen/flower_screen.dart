@@ -84,6 +84,9 @@ class _FLowserDetailState extends State<FLowserDetail>
                           return Image.network(
                             widget.image,
                             fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.error);
+                            },
                           );
                         },
                       ),

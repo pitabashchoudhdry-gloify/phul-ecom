@@ -39,6 +39,9 @@ class CuratedCollections extends StatelessWidget {
             height: 200,
             child: Image.network(
               "https://res.cloudinary.com/interflora/f_auto,q_auto/banners/same_day_delivery_collection_d_igp_collections_20230531.jpg",
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.error);
+              },
               fit: BoxFit.fill,
             ),
           ),
@@ -50,6 +53,9 @@ class CuratedCollections extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 160,
           child: Image.network(
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.error);
+            },
             "https://res.cloudinary.com/interflora/f_auto,q_auto/banners/handcrafted_hampers_collection_d_igp_collections_20230531.jpg",
             fit: BoxFit.fill,
             scale: 20.0,
