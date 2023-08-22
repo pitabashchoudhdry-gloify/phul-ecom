@@ -52,7 +52,9 @@ class MyAppBar {
           onPressed: () {},
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.push(context.namedLocation("favorite"));
+          },
           icon: const Icon(
             Icons.favorite_border_outlined,
             color: Colors.white,

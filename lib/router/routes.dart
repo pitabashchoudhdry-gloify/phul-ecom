@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/router/route_constant.dart';
 import 'package:phul_ecom_partner/screen/auth/login_page.dart';
 import 'package:phul_ecom_partner/screen/common_layout_flowers.dart';
+import 'package:phul_ecom_partner/screen/favorite_screen.dart';
 import 'package:phul_ecom_partner/screen/flower_screen.dart';
 import 'package:phul_ecom_partner/screen/home_screen.dart';
 import 'package:phul_ecom_partner/screen/no_internet.dart';
@@ -80,6 +81,13 @@ class AppRouter {
               name: 'proceed-to-checkout',
               builder: (context, state) {
                 return const ProceedToCheckOut();
+              },
+            ),
+            GoRoute(
+              path: Routes.favorite,
+              name: 'favorite',
+              builder: (context, state) {
+                return const MyFavoriteCollection();
               },
             ),
           ],

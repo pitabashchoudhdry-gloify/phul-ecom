@@ -9,6 +9,7 @@ import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 import 'package:phul_ecom_partner/utility/app_bar.dart';
 import 'package:phul_ecom_partner/utility/app_drawer.dart';
+import 'package:phul_ecom_partner/utility/customPainter/rectangle_painter.dart';
 import 'package:phul_ecom_partner/utility/logo_categpry_box.dart';
 import 'package:phul_ecom_partner/widget/carousel.dart';
 import 'package:phul_ecom_partner/widget/cities.dart';
@@ -126,7 +127,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getB() async {
-    print("reloading");
     Future.delayed(const Duration(seconds: 6), () {
       // return "wel come";
       showDialog(
@@ -399,7 +399,7 @@ class _HomePageState extends State<HomePage> {
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: StaticData.topSellers.length,
+                            itemCount: state.topSeller.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
@@ -417,25 +417,21 @@ class _HomePageState extends State<HomePage> {
                                   context.push(
                                     context.namedLocation("flower-detail",
                                         pathParameters: <String, String>{
-                                          'name':
-                                              StaticData.topSellers[index].title
+                                          'name': state.topSeller[index].title
                                         },
                                         queryParameters: <String, String>{
-                                          'heading': StaticData
-                                              .topSellers[index].title,
-                                          'ratings': StaticData
-                                              .topSellers[index].ratings,
-                                          'itemId': StaticData
-                                              .topSellers[index].id
+                                          'heading':
+                                              state.topSeller[index].title,
+                                          'ratings':
+                                              state.topSeller[index].ratings,
+                                          'itemId': state.topSeller[index].id
                                               .toString(),
-                                          'image': StaticData
-                                              .topSellers[index].image,
-                                          'price': StaticData
-                                              .topSellers[index].price,
+                                          'image': state.topSeller[index].image,
+                                          'price': state.topSeller[index].price,
                                         }),
                                   );
                                 },
-                                topSeller: StaticData.topSellers[index],
+                                topSeller: state.topSeller[index],
                               );
                             },
                           ),
