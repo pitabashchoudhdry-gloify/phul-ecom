@@ -87,10 +87,6 @@ class _HomePageState extends State<HomePage> {
     Future.wait([
       getA(context),
       getB(),
-      getC(),
-      getD(),
-      getE(),
-      getF(),
     ]).then((List<dynamic> data) {
       setState(() {
         e = false;
@@ -110,10 +106,6 @@ class _HomePageState extends State<HomePage> {
     Future.wait([
       getA(context),
       getB(),
-      getC(),
-      getD(),
-      getE(),
-      getF(),
     ]).then((List<dynamic> data) {
       setState(() {
         e = false;
@@ -134,11 +126,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getB() async {
+    print("reloading");
     Future.delayed(const Duration(seconds: 6), () {
       // return "wel come";
       showDialog(
           context: context,
-          builder: (_) {
+          builder: (context) {
             return AlertDialog(
               insetPadding: EdgeInsets.zero,
               content: SizedBox(
@@ -171,30 +164,6 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           });
-    });
-  }
-
-  Future<void> getC() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getD() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getE() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getF() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
     });
   }
 

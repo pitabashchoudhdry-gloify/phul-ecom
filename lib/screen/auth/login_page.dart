@@ -10,7 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey _globalKey = GlobalKey<FormState>();
+  //final GlobalKey _globalKey = GlobalKey<FormState>();
+  final _loginformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: const Color.fromARGB(221, 43, 43, 43),
       body: SafeArea(
         child: Form(
-          key: _globalKey,
+          key: _loginformKey,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -89,8 +90,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      if (context.canPop()) {
-                        context.pop();
+                      // if (context.canPop()) {
+                      //   context.pop();
+                      // }
+
+                      if (_loginformKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Login Successfull")));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Login Failed")));
                       }
                     },
                     child: const Text("Log In"),
@@ -102,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Don't have account?",
+                          "Don't have account? Sign up",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Colors.white,
