@@ -9,7 +9,6 @@ import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 import 'package:phul_ecom_partner/utility/app_bar.dart';
 import 'package:phul_ecom_partner/utility/app_drawer.dart';
-import 'package:phul_ecom_partner/utility/customPainter/rectangle_painter.dart';
 import 'package:phul_ecom_partner/utility/logo_categpry_box.dart';
 import 'package:phul_ecom_partner/widget/carousel.dart';
 import 'package:phul_ecom_partner/widget/cities.dart';
