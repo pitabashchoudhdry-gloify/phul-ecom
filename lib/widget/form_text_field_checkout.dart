@@ -7,14 +7,22 @@ class FormTextField extends StatelessWidget {
     required this.textType,
     required this.label,
     required this.hintText,
+    this.borderColor,
+    this.fillColors,
   }) : super(key: key);
   final String? validator;
   final TextInputType? textType;
   final String label;
   final String hintText;
+  final Color? borderColor;
+  final Color? fillColors;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyle(
+        color: borderColor ?? Colors.black,
+      ),
       keyboardType: textType,
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -22,31 +30,31 @@ class FormTextField extends StatelessWidget {
         }
         return null;
       },
-      // onChanged: widget.function,
       onTap: () {},
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.grey.shade100,
+            color: borderColor ?? Colors.grey.shade100,
             width: 1.0,
           ),
         ),
         label: Text(label),
-        labelStyle: const TextStyle(
-          color: Colors.black,
+        labelStyle: TextStyle(
+          color: borderColor ?? Colors.black,
         ),
         hintText: hintText,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontStyle: FontStyle.normal,
+          color: borderColor ?? Colors.black,
         ),
         isDense: true,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: fillColors ?? Colors.white,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.grey.shade100,
+            color: borderColor ?? Colors.grey.shade100,
             width: 1.0,
           ),
         ),

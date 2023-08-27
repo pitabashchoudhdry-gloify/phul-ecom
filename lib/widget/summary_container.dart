@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phul_ecom_partner/blocs/cart/bloc/addtocart_bloc.dart';
+import 'package:phul_ecom_partner/data/model/add_cart_model.dart';
 import 'package:phul_ecom_partner/data/static_data/static_data.dart';
 
 class OrderSummary extends StatefulWidget {
@@ -15,232 +18,249 @@ class _MyWidgetState extends State<OrderSummary> {
     // final sHeight = MediaQuery.of(context).size.height;
     // ScrollController ctr = ScrollController();
 
-    return SizedBox(
-      width: sWidth,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.white,
+    return BlocBuilder<AddtocartBloc, AddtocartState>(
+      builder: (context, state) {
+        if (state is Addtocart) {
+          return SizedBox(
             width: sWidth,
-            height: 80,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  color: Colors.white,
+                  width: sWidth,
+                  height: 80,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Your Contact Details *",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                            ),
+                            const Text(
+                              "(pitabash choudhdry, 9583871974)",
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.add,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  color: Colors.white,
+                  width: sWidth,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(0.0),
+                    leading: const Icon(
+                      Icons.stacked_bar_chart_outlined,
+                      size: 30,
+                    ),
+                    title: Text(
+                      "Add a Personalized Message",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    // trailing: TextButton(
+                    //   onPressed: () {
+                    //     ctr.animateTo(10 * 100,
+                    //         duration: const Duration(milliseconds: 1000),
+                    //         curve: Curves.bounceIn);
+                    //   },
+                    //   child: const Text("compose"),
+                    // ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: sWidth,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Your Contact Details *",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 20,
+                        "Order Summary",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               color: Colors.black,
+                              //  fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                       ),
-                      const Text(
-                        "(pitabash choudhdry, 9583871974)",
+                      RichText(
+                        text: TextSpan(
+                            text: 'Total:',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Colors.black,
+                                      // fontSize: 20,
+                                    ),
+                            children: [
+                              TextSpan(
+                                text: '₹ 15000',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      color: Colors.black,
+                                      // fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  const Icon(
-                    Icons.add,
-                    size: 30,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.white,
-            width: sWidth,
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(0.0),
-              leading: const Icon(
-                Icons.stacked_bar_chart_outlined,
-                size: 30,
-              ),
-              title: Text(
-                "Add a Personalized Message",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              // trailing: TextButton(
-              //   onPressed: () {
-              //     ctr.animateTo(10 * 100,
-              //         duration: const Duration(milliseconds: 1000),
-              //         curve: Curves.bounceIn);
-              //   },
-              //   child: const Text("compose"),
-              // ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            width: sWidth,
-            height: 50,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
                 ),
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  color: Colors.white,
+                  width: sWidth,
+                  //height: 120,
+                  child: ListView.separated(
+                    // controller: ctr,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return summaryproduct(
+                          sWidth, context, state.items[index]);
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 10.0,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.all(0.0),
+                  leading: const Icon(Icons.gif_box_outlined),
+                  title: RichText(
+                    text: TextSpan(
+                        text: 'Have a coupon code?',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: Colors.black,
+                              // fontSize: 20,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: ' Apply here',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Colors.blue,
+                                      // fontSize: 20,
+                                    ),
+                          ),
+                        ]),
+                  ),
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.all(0.0),
+                  leading: const Icon(Icons.percent_outlined),
+                  title: RichText(
+                    text: TextSpan(
+                        text: 'Have a gift voucher?',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: Colors.black,
+                              // fontSize: 20,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: ' Redeem',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Colors.blue,
+                                      // fontSize: 20,
+                                    ),
+                          ),
+                        ]),
+                  ),
+                ),
+                billingDetails(sWidth, context),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
-                  "Order Summary",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.black,
-                        //  fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  "Message Card 🎁",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 20,
                       ),
                 ),
-                RichText(
-                  text: TextSpan(
-                      text: 'Total:',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Colors.black,
-                            // fontSize: 20,
-                          ),
-                      children: [
-                        TextSpan(
-                          text: '₹ 15000',
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Colors.black,
-                                    // fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                const Divider(
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                  width: sWidth,
+                  height: 50,
+                  child: ListView.separated(
+                    //controller: ctr,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    itemCount: StaticData.gifts.length,
+                    itemBuilder: (context, index) {
+                      return Chip(
+                        label: Text(
+                          StaticData.gifts[index].gift,
                         ),
-                      ]),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        width: 10,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.white,
-            width: sWidth,
-            //height: 120,
-            child: ListView.separated(
-              // controller: ctr,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return summaryproduct(sWidth, context);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  height: 10.0,
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.all(0.0),
-            leading: const Icon(Icons.gif_box_outlined),
-            title: RichText(
-              text: TextSpan(
-                  text: 'Have a coupon code?',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.black,
-                        // fontSize: 20,
-                      ),
-                  children: [
-                    TextSpan(
-                      text: ' Apply here',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Colors.blue,
-                            // fontSize: 20,
-                          ),
-                    ),
-                  ]),
-            ),
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.all(0.0),
-            leading: const Icon(Icons.percent_outlined),
-            title: RichText(
-              text: TextSpan(
-                  text: 'Have a gift voucher?',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.black,
-                        // fontSize: 20,
-                      ),
-                  children: [
-                    TextSpan(
-                      text: ' Redeem',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Colors.blue,
-                            // fontSize: 20,
-                          ),
-                    ),
-                  ]),
-            ),
-          ),
-          billingDetails(sWidth, context),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Message Card 🎁",
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 20,
-                ),
-          ),
-          const Divider(
-            color: Colors.grey,
-          ),
-          SizedBox(
-            width: sWidth,
-            height: 50,
-            child: ListView.separated(
-              //controller: ctr,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              itemCount: StaticData.gifts.length,
-              itemBuilder: (context, index) {
-                return Chip(
-                  label: Text(
-                    StaticData.gifts[index].gift,
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  width: 10,
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 
@@ -340,7 +360,8 @@ class _MyWidgetState extends State<OrderSummary> {
     );
   }
 
-  Container summaryproduct(double sWidth, BuildContext context) {
+  Container summaryproduct(
+      double sWidth, BuildContext context, Carting carting) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -362,20 +383,22 @@ class _MyWidgetState extends State<OrderSummary> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.network(
-                  "https://res.cloudinary.com/interflora/f_auto,q_auto,t_prodth/products/p-hues-of-sky-149690-m.jpg",
+                  carting.image,
                   height: 80,
                   width: 80,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: SizedBox(
-                    height: 80,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    //height: 80,
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Hues of Sky",
+                          carting.title,
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: 14,
@@ -383,7 +406,7 @@ class _MyWidgetState extends State<OrderSummary> {
                                   ),
                         ),
                         Text(
-                          "Qty. 2",
+                          "Qty. ${carting.size}",
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: 14,
@@ -396,7 +419,7 @@ class _MyWidgetState extends State<OrderSummary> {
                 ),
                 const Spacer(),
                 Text(
-                  "₹ 3490",
+                  "₹ ${carting.price}",
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

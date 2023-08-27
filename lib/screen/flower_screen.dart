@@ -53,8 +53,11 @@ class _FLowserDetailState extends State<FLowserDetail>
     return BlocListener<AddtocartBloc, AddtocartState>(
       listener: (context, state) {
         if (state is Addtocart && state.move == true) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(content: Text(state.items.length.toString())));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Item Added To Cart.."),
+            ),
+          );
 
           context.push(context.namedLocation("add-to-cart"));
         }
@@ -84,6 +87,9 @@ class _FLowserDetailState extends State<FLowserDetail>
                           return Image.network(
                             widget.image,
                             fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.error);
+                            },
                           );
                         },
                       ),

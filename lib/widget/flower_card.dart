@@ -30,6 +30,9 @@ class FlowerCard extends StatelessWidget {
                 child: Image.network(
                   topSeller.image,
                   fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.error);
+                  },
                 ),
               ),
             ),

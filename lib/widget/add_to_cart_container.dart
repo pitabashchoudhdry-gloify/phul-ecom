@@ -40,6 +40,9 @@ class _AddToContainerState extends State<AddToContainer> {
                   fit: BoxFit.fill,
                   width: 140,
                   height: 140,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.error);
+                  },
                 ),
                 Expanded(
                   flex: 1,

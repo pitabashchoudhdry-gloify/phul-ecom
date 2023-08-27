@@ -7,4 +7,11 @@ class TopSellerService {
       return StaticData.topSellers;
     });
   }
+
+  Future<List<TopSeller>> fetchAddressList() async {
+    return await Future.delayed(const Duration(seconds: 20), () {
+      print("ok");
+      return StaticData.topSellers;
+    });
+  }
 }

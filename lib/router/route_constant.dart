@@ -7,4 +7,5 @@ abstract class Routes {
   static const noInternet = '/no-internet';
   static const addToCart = 'add-to-cart';
   static const checkOut = 'proceed-to-checkout';
+  static const favorite = 'favorite';
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,13 +30,52 @@ class _HomePageState extends State<HomePage> {
   String a = '';
   bool e = false;
   bool b = false;
+  //int _counter = 0;
+  //late Timer timer;
   @override
   void initState() {
     // getData(context);
+
+    // _startTimer();
     getMe();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    //timer.cancel();
+    super.dispose();
+  }
+
+  /// timer testing
+  // void _startTimer() async {
+  //   const Duration interval = Duration(seconds: 5); // Interval for the timer
+  //   timer = Timer.periodic(interval, (Timer timer) async {
+  //     // Show a SnackBar at regular intervals
+  //     if (_counter == 5) {
+  //       timer.cancel();
+  //     } else {
+  //       _showSnackBar();
+  //     }
+  //   });
+  // }
+
+  // void _showSnackBar() {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       dismissDirection: DismissDirection.horizontal,
+  //       content: Text('SnackBar $_counter'),
+  //       duration: const Duration(seconds: 2),
+  //     ),
+  //   );
+
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
+
+  /// timer testing
   getMe() async {
     context.read<HomeScreenBlocBloc>().add(const HomeScreenDataEvent());
   }
@@ -46,10 +87,6 @@ class _HomePageState extends State<HomePage> {
     Future.wait([
       getA(context),
       getB(),
-      getC(),
-      getD(),
-      getE(),
-      getF(),
     ]).then((List<dynamic> data) {
       setState(() {
         e = false;
@@ -69,10 +106,6 @@ class _HomePageState extends State<HomePage> {
     Future.wait([
       getA(context),
       getB(),
-      getC(),
-      getD(),
-      getE(),
-      getF(),
     ]).then((List<dynamic> data) {
       setState(() {
         e = false;
@@ -93,32 +126,43 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getB() async {
-    return Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 6), () {
       // return "wel come";
-    });
-  }
-
-  Future<void> getC() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getD() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getE() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
-    });
-  }
-
-  Future<void> getF() async {
-    return Future.delayed(const Duration(seconds: 8), () {
-      // return true;
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              insetPadding: EdgeInsets.zero,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Wel come to InterFlora",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.black,
+                            fontSize: 25,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Make Your Beloved Happy by presenting the token of love in the form of Flower Bouquet",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
     });
   }
 
@@ -146,7 +190,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           );
+        } else if (state is HomeScreenBlocInitial) {
+          return const SizedBox.shrink();
         } else {
+          getB();
           return dataLoaded(context);
         }
       },
@@ -351,7 +398,7 @@ class _HomePageState extends State<HomePage> {
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: StaticData.topSellers.length,
+                            itemCount: state.topSeller.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
@@ -369,25 +416,21 @@ class _HomePageState extends State<HomePage> {
                                   context.push(
                                     context.namedLocation("flower-detail",
                                         pathParameters: <String, String>{
-                                          'name':
-                                              StaticData.topSellers[index].title
+                                          'name': state.topSeller[index].title
                                         },
                                         queryParameters: <String, String>{
-                                          'heading': StaticData
-                                              .topSellers[index].title,
-                                          'ratings': StaticData
-                                              .topSellers[index].ratings,
-                                          'itemId': StaticData
-                                              .topSellers[index].id
+                                          'heading':
+                                              state.topSeller[index].title,
+                                          'ratings':
+                                              state.topSeller[index].ratings,
+                                          'itemId': state.topSeller[index].id
                                               .toString(),
-                                          'image': StaticData
-                                              .topSellers[index].image,
-                                          'price': StaticData
-                                              .topSellers[index].price,
+                                          'image': state.topSeller[index].image,
+                                          'price': state.topSeller[index].price,
                                         }),
                                   );
                                 },
-                                topSeller: StaticData.topSellers[index],
+                                topSeller: state.topSeller[index],
                               );
                             },
                           ),

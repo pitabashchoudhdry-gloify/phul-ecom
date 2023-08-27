@@ -43,6 +43,10 @@ class HomeScreenBlocBloc
     // topSellerBloc.add(const TopSellerDataEvent());
     List<TopSeller> top = [];
     List<String> city = [];
+
+    // this service is for testing purpose
+    TopSellerService().fetchAddressList();
+    //
     try {
       final futures = Future.wait([
         TopSellerService().fetchTopSellerList(),

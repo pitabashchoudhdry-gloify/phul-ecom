@@ -23,13 +23,17 @@ class _CarouselState extends State<Carousel> {
         return Container(
           margin: const EdgeInsets.all(5.0),
           child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                e,
-                fit: BoxFit.fill,
-                width: 1000.0,
-                height: 200,
-              )),
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            child: Image.network(
+              e,
+              fit: BoxFit.fill,
+              width: 1000.0,
+              height: 200,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.error);
+              },
+            ),
+          ),
         );
       }).toList(),
       options: CarouselOptions(
