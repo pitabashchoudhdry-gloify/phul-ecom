@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phul_ecom_partner/constant/global_constant.dart';
 
 class FormTextField extends StatelessWidget {
   const FormTextField({
@@ -9,6 +10,7 @@ class FormTextField extends StatelessWidget {
     required this.hintText,
     this.borderColor,
     this.fillColors,
+    this.controller,
   }) : super(key: key);
   final String? validator;
   final TextInputType? textType;
@@ -16,10 +18,14 @@ class FormTextField extends StatelessWidget {
   final String hintText;
   final Color? borderColor;
   final Color? fillColors;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorRadius: const Radius.circular(50),
+      cursorColor: ColorsConstant.backgroundButtonColor,
+      controller: controller,
       style: TextStyle(
         color: borderColor ?? Colors.black,
       ),
@@ -32,6 +38,8 @@ class FormTextField extends StatelessWidget {
       },
       onTap: () {},
       decoration: InputDecoration(
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(

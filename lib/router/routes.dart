@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/router/route_constant.dart';
 import 'package:phul_ecom_partner/screen/auth/login_page.dart';
+import 'package:phul_ecom_partner/screen/auth/signup_page.dart';
 import 'package:phul_ecom_partner/screen/common_layout_flowers.dart';
 import 'package:phul_ecom_partner/screen/favorite_screen.dart';
 import 'package:phul_ecom_partner/screen/flower_screen.dart';
@@ -99,6 +100,12 @@ class AppRouter {
           name: 'login',
           builder: (context, state) {
             return const LoginPage();
+          }),
+      GoRoute(
+          path: Routes.signup,
+          name: 'signup',
+          builder: (context, state) {
+            return const SignUpPage();
           }),
       GoRoute(
           path: Routes.noInternet,
