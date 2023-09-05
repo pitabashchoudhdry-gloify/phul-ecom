@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phul_ecom_partner/blocs/userSession/bloc/userdata_bloc.dart';
 import 'package:phul_ecom_partner/widget/form_text_field_checkout.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class _MyWidgetState extends State<SignUpPage> {
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   final _signupformKey = GlobalKey<FormState>();
+  bool value = false;
   @override
   void initState() {
     // context.read<UsersessionBloc>().add(const UserStarting());
@@ -58,7 +61,7 @@ class _MyWidgetState extends State<SignUpPage> {
                 child: Container(
                   clipBehavior: Clip.none,
                   width: MediaQuery.of(context).size.width,
-                  height: 200,
+                  height: 180,
                   color: Colors.white,
                   child: Stack(
                     alignment: Alignment.center,
@@ -167,58 +170,126 @@ class _MyWidgetState extends State<SignUpPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                          elevation: 0.0,
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          side: const BorderSide(
-                            width: 1.0,
-                            color: Colors.white,
+                      CheckboxListTile(
+                          selected: value,
+                          selectedTileColor: Colors.green,
+                          checkboxShape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              color: Colors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(100),
                           ),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
                           shape: RoundedRectangleBorder(
+                            //side: const BorderSide(color: Colors.red, width: 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                        onPressed: () {
-                          // if (context.canPop()) {
-                          //   context.pop();
-                          // }
+                          controlAffinity: ListTileControlAffinity.leading,
+                          // enabled: true,
 
-                          if (_signupformKey.currentState!.validate()) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    contentPadding: EdgeInsets.zero,
-                                    insetPadding: EdgeInsets.zero,
-                                    content: SizedBox(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 100,
-                                      child: Column(
-                                        children: [
-                                          Text(name.text),
-                                          Text(email.text),
-                                          Text(mobile.text),
-                                          Text(password.text),
-                                          Text(confirmPassword.text),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                });
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   const SnackBar(
-                            //     content: Text("Login Successfull"),
-                            //   ),
-                            // );
+                          checkColor: Colors.orange,
+                          activeColor: Colors.white,
+                          tileColor: Colors.transparent,
+                          title: const Text(
+                            "By checking this box, you are agreeing to our terms of service.” Or: “I agree to the terms and conditions as set out by the user agreement.",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          value: value,
+                          onChanged: (k) {
+                            setState(() {
+                              value = !value;
+                            });
+                          }),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      BlocBuilder<UserdataBloc, UserdataState>(
+                        builder: (context, state) {
+                          if (state is UserLoading) {
+                            return const CircularProgressIndicator.adaptive();
+                          } else if (state is UserSession) {
+                            return GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<UserdataBloc>()
+                                    .add(const UserdataEvent());
+                              },
+                              child: Container(
+                                color: Colors.green,
+                                width: MediaQuery.of(context).size.width,
+                                height: 100,
+                                child: Column(
+                                  children: [
+                                    Text(state.name),
+                                  ],
+                                ),
+                              ),
+                            );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Login Failed")));
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50.0),
+                                elevation: 0.0,
+                                backgroundColor: Colors.transparent,
+                                foregroundColor: Colors.white,
+                                side: const BorderSide(
+                                  width: 1.0,
+                                  color: Colors.white,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: () {
+                                // if (context.canPop()) {
+                                //   context.pop();
+                                // }
+
+                                if (_signupformKey.currentState!.validate()) {
+                                  context.read<UserdataBloc>().add(
+                                      UserRegisterEvent(
+                                          name: name.text,
+                                          email: email.text,
+                                          mobile: int.parse(mobile.text),
+                                          password: password.text));
+                                  // showDialog(
+                                  //     context: context,
+                                  //     builder: (context) {
+                                  //       return AlertDialog(
+                                  //         contentPadding: EdgeInsets.zero,
+                                  //         insetPadding: EdgeInsets.zero,
+                                  //         content: SizedBox(
+                                  //           width: MediaQuery.of(context)
+                                  //               .size
+                                  //               .width,
+                                  //           height: 100,
+                                  //           child: Column(
+                                  //             children: [
+                                  //               Text(name.text),
+                                  //               Text(email.text),
+                                  //               Text(mobile.text),
+                                  //               Text(password.text),
+                                  //               Text(confirmPassword.text),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       );
+                                  //     });
+
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text("Login Failed")));
+                                }
+                              },
+                              child: const Text("Register"),
+                            );
                           }
                         },
-                        child: const Text("Register"),
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
