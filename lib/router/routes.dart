@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:phul_ecom_partner/router/route_constant.dart';
+import 'package:phul_ecom_partner/screen/address_screen.dart';
 import 'package:phul_ecom_partner/screen/auth/login_page.dart';
 import 'package:phul_ecom_partner/screen/auth/signup_page.dart';
 import 'package:phul_ecom_partner/screen/common_layout_flowers.dart';
@@ -89,6 +90,13 @@ class AppRouter {
               name: 'favorite',
               builder: (context, state) {
                 return const MyFavoriteCollection();
+              },
+            ),
+            GoRoute(
+              path: Routes.myaddress,
+              name: 'address',
+              builder: (context, state) {
+                return const UserAddress();
               },
             ),
           ],

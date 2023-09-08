@@ -42,4 +42,23 @@ class _CarouselState extends State<Carousel> {
       ),
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return BlocBuilder<SliderBloc, double>(
+  //     builder: (context, state) {
+  //       return Slider(
+  //         value: state,
+  //         onChanged: (newValue) {
+  //           context.read<SliderBloc>().add(SliderStop());
+  //           context.read<SliderBloc>().add(SliderUpdate(newValue));
+  //         },
+  //         min: context.read<SliderBloc>().min,
+  //         max: context.read<SliderBloc>().max,
+  //         divisions:
+  //             (context.read<SliderBloc>().max - context.read<SliderBloc>().min)
+  //                 .toInt(),
+  //       );
+  //     },
+  //   );
+  // }
 }

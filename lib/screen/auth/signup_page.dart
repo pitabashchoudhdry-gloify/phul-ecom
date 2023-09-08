@@ -47,277 +47,300 @@ class _MyWidgetState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: const Color.fromARGB(221, 43, 43, 43),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 0.0),
-              child: ClipPath(
-                clipper: CustomWidget(),
-                child: Container(
-                  clipBehavior: Clip.none,
-                  width: MediaQuery.of(context).size.width,
-                  height: 180,
-                  color: Colors.white,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    children: [
-                      Positioned(
-                        width: MediaQuery.of(context).size.width,
-                        height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 4.0),
-                          child: Text(
-                            "Wel Come To InterFlora",
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                    ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Form(
-              key: _signupformKey,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        height: 100,
-                        child: Image.asset(
-                          "assets/interflora-logo-desktop.png",
-                          width: 120,
-                          height: 100,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      FormTextField(
-                        controller: name,
-                        borderColor: Colors.white,
-                        fillColors: const Color.fromARGB(221, 43, 43, 43),
-                        hintText: 'Enter Name',
-                        textType: TextInputType.name,
-                        validator: 'Name required',
-                        label: 'Name',
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FormTextField(
-                        controller: email,
-                        borderColor: Colors.white,
-                        fillColors: const Color.fromARGB(221, 43, 43, 43),
-                        hintText: 'Enter Email',
-                        textType: TextInputType.emailAddress,
-                        validator: 'Email required',
-                        label: 'Email',
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FormTextField(
-                        controller: mobile,
-                        borderColor: Colors.white,
-                        fillColors: const Color.fromARGB(221, 43, 43, 43),
-                        hintText: 'Enter Mobile Number',
-                        textType: TextInputType.phone,
-                        validator: 'Mobile Number required',
-                        label: 'Mobile Number',
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FormTextField(
-                        controller: password,
-                        borderColor: Colors.white,
-                        fillColors: const Color.fromARGB(221, 43, 43, 43),
-                        hintText: 'Enter password',
-                        textType: TextInputType.visiblePassword,
-                        validator: 'Password required',
-                        label: 'Password',
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FormTextField(
-                        controller: confirmPassword,
-                        borderColor: Colors.white,
-                        fillColors: const Color.fromARGB(221, 43, 43, 43),
-                        hintText: 'Confirm password',
-                        textType: TextInputType.visiblePassword,
-                        validator: 'Password not matched',
-                        label: 'Confirm Password',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CheckboxListTile(
-                          selected: value,
-                          selectedTileColor: Colors.green,
-                          checkboxShape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              color: Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          shape: RoundedRectangleBorder(
-                            //side: const BorderSide(color: Colors.red, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          // enabled: true,
-
-                          checkColor: Colors.orange,
-                          activeColor: Colors.white,
-                          tileColor: Colors.transparent,
-                          title: const Text(
-                            "By checking this box, you are agreeing to our terms of service.” Or: “I agree to the terms and conditions as set out by the user agreement.",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          value: value,
-                          onChanged: (k) {
-                            setState(() {
-                              value = !value;
-                            });
-                          }),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      BlocBuilder<UserdataBloc, UserdataState>(
-                        builder: (context, state) {
-                          if (state is UserLoading) {
-                            return const CircularProgressIndicator.adaptive();
-                          } else if (state is UserSession) {
-                            return GestureDetector(
-                              onTap: () {
-                                context
-                                    .read<UserdataBloc>()
-                                    .add(const UserdataEvent());
-                              },
-                              child: Container(
-                                color: Colors.green,
-                                width: MediaQuery.of(context).size.width,
-                                height: 100,
-                                child: Column(
-                                  children: [
-                                    Text(state.name),
-                                  ],
-                                ),
-                              ),
-                            );
-                          } else {
-                            return ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 50.0),
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                foregroundColor: Colors.white,
-                                side: const BorderSide(
-                                  width: 1.0,
-                                  color: Colors.white,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              onPressed: () {
-                                // if (context.canPop()) {
-                                //   context.pop();
-                                // }
-
-                                if (_signupformKey.currentState!.validate()) {
-                                  context.read<UserdataBloc>().add(
-                                      UserRegisterEvent(
-                                          name: name.text,
-                                          email: email.text,
-                                          mobile: int.parse(mobile.text),
-                                          password: password.text));
-                                  // showDialog(
-                                  //     context: context,
-                                  //     builder: (context) {
-                                  //       return AlertDialog(
-                                  //         contentPadding: EdgeInsets.zero,
-                                  //         insetPadding: EdgeInsets.zero,
-                                  //         content: SizedBox(
-                                  //           width: MediaQuery.of(context)
-                                  //               .size
-                                  //               .width,
-                                  //           height: 100,
-                                  //           child: Column(
-                                  //             children: [
-                                  //               Text(name.text),
-                                  //               Text(email.text),
-                                  //               Text(mobile.text),
-                                  //               Text(password.text),
-                                  //               Text(confirmPassword.text),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       );
-                                  //     });
-
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text("Login Failed")));
-                                }
-                              },
-                              child: const Text("Register"),
-                            );
-                          }
+    return BlocListener<UserdataBloc, UserdataState>(
+      listener: (context, state) {
+        if (state is UserSession) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const Text("Registration Successful"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          context.goNamed('login');
                         },
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              context.goNamed('login');
-                            },
+                        child: const Text("Login"))
+                  ],
+                );
+              });
+        } else {}
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: const Color.fromARGB(221, 43, 43, 43),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 0.0),
+                child: ClipPath(
+                  clipper: CustomWidget(),
+                  child: Container(
+                    clipBehavior: Clip.none,
+                    width: MediaQuery.of(context).size.width,
+                    height: 180,
+                    color: Colors.white,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      children: [
+                        Positioned(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              "Have account? Sign in",
+                              "Wel Come To InterFlora",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
+                                  .bodySmall!
                                   .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
                                   ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Form(
+                key: _signupformKey,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 100,
+                          child: Image.asset(
+                            "assets/interflora-logo-desktop.png",
+                            width: 120,
+                            height: 100,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        FormTextField(
+                          controller: name,
+                          borderColor: Colors.white,
+                          fillColors: const Color.fromARGB(221, 43, 43, 43),
+                          hintText: 'Enter Name',
+                          textType: TextInputType.name,
+                          validator: 'Name required',
+                          label: 'Name',
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        FormTextField(
+                          controller: email,
+                          borderColor: Colors.white,
+                          fillColors: const Color.fromARGB(221, 43, 43, 43),
+                          hintText: 'Enter Email',
+                          textType: TextInputType.emailAddress,
+                          validator: 'Email required',
+                          label: 'Email',
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        FormTextField(
+                          controller: mobile,
+                          borderColor: Colors.white,
+                          fillColors: const Color.fromARGB(221, 43, 43, 43),
+                          hintText: 'Enter Mobile Number',
+                          textType: TextInputType.phone,
+                          validator: 'Mobile Number required',
+                          label: 'Mobile Number',
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        FormTextField(
+                          controller: password,
+                          borderColor: Colors.white,
+                          fillColors: const Color.fromARGB(221, 43, 43, 43),
+                          hintText: 'Enter password',
+                          textType: TextInputType.visiblePassword,
+                          validator: 'Password required',
+                          label: 'Password',
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        FormTextField(
+                          controller: confirmPassword,
+                          borderColor: Colors.white,
+                          fillColors: const Color.fromARGB(221, 43, 43, 43),
+                          hintText: 'Confirm password',
+                          textType: TextInputType.visiblePassword,
+                          validator: 'Password not matched',
+                          label: 'Confirm Password',
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CheckboxListTile(
+                            selected: value,
+                            selectedTileColor: Colors.green,
+                            checkboxShape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            shape: RoundedRectangleBorder(
+                              //side: const BorderSide(color: Colors.red, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            // enabled: true,
+
+                            checkColor: Colors.orange,
+                            activeColor: Colors.white,
+                            tileColor: Colors.transparent,
+                            title: const Text(
+                              "By checking this box, you are agreeing to our terms of service.” Or: “I agree to the terms and conditions as set out by the user agreement.",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            value: value,
+                            onChanged: (k) {
+                              setState(() {
+                                value = !value;
+                              });
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        BlocBuilder<UserdataBloc, UserdataState>(
+                          builder: (context, state) {
+                            if (state is UserLoading) {
+                              return const CircularProgressIndicator.adaptive();
+                            } else if (state is UserSession) {
+                              return GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<UserdataBloc>()
+                                      .add(const UserdataEvent());
+                                },
+                                child: Container(
+                                  color: Colors.green,
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 100,
+                                  child: Column(
+                                    children: [
+                                      Text(state.name),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 50.0),
+                                  elevation: 0.0,
+                                  backgroundColor: Colors.transparent,
+                                  foregroundColor: Colors.white,
+                                  side: const BorderSide(
+                                    width: 1.0,
+                                    color: Colors.white,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  // if (context.canPop()) {
+                                  //   context.pop();
+                                  // }
+
+                                  if (_signupformKey.currentState!.validate()) {
+                                    context.read<UserdataBloc>().add(
+                                        UserRegisterEvent(
+                                            name: name.text,
+                                            email: email.text,
+                                            mobile: int.parse(mobile.text),
+                                            password: password.text));
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) {
+                                    //       return AlertDialog(
+                                    //         contentPadding: EdgeInsets.zero,
+                                    //         insetPadding: EdgeInsets.zero,
+                                    //         content: SizedBox(
+                                    //           width: MediaQuery.of(context)
+                                    //               .size
+                                    //               .width,
+                                    //           height: 100,
+                                    //           child: Column(
+                                    //             children: [
+                                    //               Text(name.text),
+                                    //               Text(email.text),
+                                    //               Text(mobile.text),
+                                    //               Text(password.text),
+                                    //               Text(confirmPassword.text),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     });
+
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text("Login Failed")));
+                                  }
+                                },
+                                child: const Text("Register"),
+                              );
+                            }
+                          },
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                context.goNamed('login');
+                              },
+                              child: Text(
+                                "Have account? Sign in",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

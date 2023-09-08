@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phul_ecom_partner/blocs/address/bloc/useraddress_bloc.dart';
 import 'package:phul_ecom_partner/blocs/cart/bloc/addtocart_bloc.dart';
 import 'package:phul_ecom_partner/blocs/homescreen/bloc/home_screen_bloc_bloc.dart';
 import 'package:phul_ecom_partner/blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) {
           return UserdataBloc();
+        }),
+        BlocProvider(create: (context) {
+          return UseraddressBloc();
         }),
       ],
       child: MaterialApp.router(

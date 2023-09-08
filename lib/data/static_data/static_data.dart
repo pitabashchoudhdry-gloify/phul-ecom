@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class StaticData {
   static List<LogoCategory> get logoCategory => [
         LogoCategory(
@@ -330,6 +331,43 @@ class StaticData {
         MessageCard(id: 4, gift: "House warming"),
         MessageCard(id: 5, gift: "Wedding"),
       ];
+
+  static List<UserAddressModal> get userAddressList => [
+        UserAddressModal(
+            id: "1",
+            name: "Mukesh",
+            country: "India",
+            zipCode: 754689,
+            city: "Patna",
+            state: "Bihar",
+            addressline_1: "#12-maruti nagar",
+            mobile: 9845678732,
+            email: "one@gmail.com",
+            type: 0),
+        UserAddressModal(
+            id: "2",
+            name: "Lokesh",
+            country: "India",
+            zipCode: 750689,
+            city: "Lucknow",
+            state: "Uttar Pradesh",
+            addressline_1: "#120-vss nagar",
+            mobile: 9545678732,
+            email: "two@gmail.com",
+            type: 1,
+            addressline_2: "Maruti nagar,#67-phase 6"),
+        UserAddressModal(
+            id: "3",
+            name: "Rajesh",
+            country: "India",
+            zipCode: 754089,
+            city: "Patna",
+            state: "Bihar",
+            addressline_1: "#192-ctc nagar",
+            mobile: 9805678732,
+            email: "three@gmail.com",
+            type: 2),
+      ];
 }
 
 class LogoCategory {
@@ -377,5 +415,34 @@ class MessageCard {
   MessageCard({
     required this.id,
     required this.gift,
+  });
+}
+
+class UserAddressModal {
+  String id;
+  String name;
+  String country;
+  int zipCode;
+  String city;
+  String state;
+  String addressline_1;
+  String? addressline_2;
+  int mobile;
+  int? alternativeMobile;
+  String email;
+  int type;
+  UserAddressModal({
+    required this.id,
+    required this.name,
+    required this.country,
+    required this.zipCode,
+    required this.city,
+    required this.state,
+    required this.addressline_1,
+    this.addressline_2,
+    required this.mobile,
+    this.alternativeMobile,
+    required this.email,
+    required this.type,
   });
 }
