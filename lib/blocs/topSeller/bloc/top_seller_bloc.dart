@@ -8,6 +8,7 @@ part 'top_seller_state.dart';
 
 class TopSellerBloc extends Bloc<TopSellerEvent, TopSellerState> {
   TopSellerBloc() : super(TopSellerInitial()) {
+    // add(const TopSellerDataEvent());
     on<TopSellerEvent>((event, emit) {});
     on<TopSellerDataEvent>(fetchTopSeller);
     on<TopSellerDataEventHome>(fetchDataFromHomeBloc);

@@ -1,10 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phul_ecom_partner/blocs/address/bloc/useraddress_bloc.dart';
 import 'package:phul_ecom_partner/blocs/cart/bloc/addtocart_bloc.dart';
 import 'package:phul_ecom_partner/blocs/homescreen/bloc/home_screen_bloc_bloc.dart';
 import 'package:phul_ecom_partner/blocs/internetConnectivity/cubit/internetconnection_cubit.dart';
 import 'package:phul_ecom_partner/blocs/topSeller/bloc/top_seller_bloc.dart';
+import 'package:phul_ecom_partner/blocs/userSession/bloc/userdata_bloc.dart';
 import 'package:phul_ecom_partner/router/routes.dart';
 
 void main() {
@@ -50,6 +52,12 @@ class MyApp extends StatelessWidget {
             return HomeScreenBlocBloc(context.read<TopSellerBloc>());
           },
         ),
+        BlocProvider(create: (context) {
+          return UserdataBloc();
+        }),
+        BlocProvider(create: (context) {
+          return UseraddressBloc();
+        }),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -87,8 +87,8 @@ class MyAppBar {
       context: context,
       position: const RelativeRect.fromLTRB(25.0, 100.0, 0.0,
           0.0), //position where you want to show the menu on screen
-      items: const [
-        PopupMenuItem<String>(
+      items: [
+        const PopupMenuItem<String>(
           //   height: 40,
           value: '1',
           child: ListTile(
@@ -99,7 +99,7 @@ class MyAppBar {
             title: Text('Profile'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           // height: 40,
           value: '2',
           child: ListTile(
@@ -109,7 +109,7 @@ class MyAppBar {
               leading: Icon(Icons.list_alt_outlined),
               title: Text('Order History')),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           //  height: 40,
           value: '3',
           child: ListTile(
@@ -121,9 +121,12 @@ class MyAppBar {
           ),
         ),
         PopupMenuItem<String>(
+          onTap: () {
+            context.push(context.namedLocation("address"));
+          },
           // height: 40,
           value: '4',
-          child: ListTile(
+          child: const ListTile(
             horizontalTitleGap: 0,
             minVerticalPadding: 0,
             contentPadding: EdgeInsets.zero,
@@ -131,7 +134,7 @@ class MyAppBar {
             title: Text('Address Book'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           // height: 40,
           value: '4',
           child: ListTile(
@@ -142,7 +145,7 @@ class MyAppBar {
             title: Text('Track Order'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           padding: EdgeInsets.zero,
           height: 2,
           value: '5',
@@ -150,7 +153,7 @@ class MyAppBar {
             color: Colors.grey,
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           // height: 40,
           value: '6',
           child: ListTile(
@@ -161,7 +164,7 @@ class MyAppBar {
             title: Text('Contact Us'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           // height: 40,
           value: '7',
           child: ListTile(
@@ -172,7 +175,7 @@ class MyAppBar {
             title: Text('Privacy Policy'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           // height: 40,
           value: '8',
           child: ListTile(
@@ -183,7 +186,7 @@ class MyAppBar {
             title: Text('Terms And Condition'),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           padding: EdgeInsets.zero,
           height: 2,
           value: '9',
@@ -192,14 +195,17 @@ class MyAppBar {
           ),
         ),
         PopupMenuItem<String>(
+          onTap: () {
+            context.goNamed('login');
+          },
           // height: 40,
           value: '10',
-          child: ListTile(
+          child: const ListTile(
             horizontalTitleGap: 0,
             minVerticalPadding: 0,
             contentPadding: EdgeInsets.zero,
             leading: Icon(Icons.logout_outlined),
-            title: Text('Log Out'),
+            title: Text('Log In'),
           ),
         ),
       ],

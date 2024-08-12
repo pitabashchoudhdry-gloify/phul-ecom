@@ -8,4 +8,5 @@ abstract class Routes {
   static const addToCart = 'add-to-cart';
   static const checkOut = 'proceed-to-checkout';
   static const favorite = 'favorite';
+  static const myaddress = 'address';
 }
